@@ -1,0 +1,7 @@
+#!/bin/bash
+
+function phptest() {
+    cd $WEB
+    nosy --pwd $WEB/tests/phpunit "pake unit_nosetup $*; rm -f $WEB/test-results.xml"
+    cd -;
+}

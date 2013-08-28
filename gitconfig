@@ -1,0 +1,51 @@
+[user]
+	name = Jason Laster
+	email = jlaster@etsy.com
+
+[alias]
+	a = add -p
+    b = branch
+	bc = rev-parse --abbrev-ref HEAD
+	bd = branch -D
+    ci = commit
+	cia = commit --amend
+	cim	= commit -m
+    cl = clean
+    clf = clean -f
+    co = checkout
+	cob = checkout -b
+	cop = checkout -p
+	d   = diff
+	ds  = diff --stat
+    dc  = diff --cached
+	dcs = diff --cached --stat
+	dm  = diff master
+	dms = diff master --stat
+    d = diff
+	f = fetch
+	fp = format-patch --stdout
+    g = grep --line-number -p -A2
+    lp = log -p --date=short
+    lpj = log -p --date=short --author jlaster
+    ls = log --stat
+    lh = log --date=short HEAD~100..HEAD
+    lhs = log --date=short HEAD~100..HEAD --stat
+    lhj = log --date=short HEAD~1000..HEAD --author jlaster --pretty=oneline
+	r = rebase
+    rc = rebase --continue
+    rs = rebase --abort
+    ra = rebase --abort
+	ri = rebase -i
+	re = reset
+    sh = show --
+    shs = sho -- --stat
+	reh = reset HEAD
+    rehh = reset HEAD~1 --hard
+    st = status
+    stm = status --untracked=no
+    s = stash
+    sa = stash apply
+
+
+[core]
+	pager = less -r

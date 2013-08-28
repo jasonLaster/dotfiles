@@ -1,0 +1,14 @@
+
+function jlaster() {
+    $strings = array();
+    $args = func_get_args();
+
+    foreach ($args as $arg) {
+        if (!is_string($arg)) {
+            $arg = json_encode($arg);
+        }
+        $strings[] = $arg;
+    }
+    Logger::log_info('jlaster: '.implode(' ', $strings));
+}
+

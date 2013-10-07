@@ -5,6 +5,7 @@
 [alias]
 	a = add -p
     b = branch
+    ba = branch -a
 	bc = rev-parse --abbrev-ref HEAD
 	bd = branch -D
     ci = commit
@@ -31,6 +32,7 @@
     lh = log --date=short HEAD~100..HEAD
     lhs = log --date=short HEAD~100..HEAD --stat
     lhj = log --date=short HEAD~1000..HEAD --author jlaster --pretty=oneline
+    rpull = pull --rebase
 	r = rebase
     rc = rebase --continue
     rs = rebase --abort

@@ -16,7 +16,6 @@
     co = checkout
 	cob = checkout -b
 	cop = checkout -p
-	d   = diff
 	ds  = diff --stat
     dc  = diff --cached
 	dcs = diff --cached --stat
@@ -39,6 +38,7 @@
     ra = rebase --abort
 	ri = rebase -i
 	re = reset
+    rmc = rm --cached
     sh = show --
     shs = sho -- --stat
 	reh = reset HEAD

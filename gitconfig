@@ -1,53 +1,53 @@
 [user]
 	name = Jason Laster
-	email = jlaster@etsy.com
 
 [alias]
 	a = add -p
-    b = branch
+    ac = !git add -p && git commit -a
+  b = branch
     ba = branch -a
-	bc = rev-parse --abbrev-ref HEAD
-	bd = branch -D
-    ci = commit
-	cia = commit --amend
-	cim	= commit -m
-    cl = clean
+    bc = rev-parse --abbrev-ref HEAD
+    bd = branch -D
+  ci = commit
+    cia = commit --amend
+    cim	= commit -m
+  cl = clean
     clf = clean -f
-    co = checkout
-	cob = checkout -b
-	cop = checkout -p
-	ds  = diff --stat
+  co = checkout
+    cob = checkout -b
+    cop = checkout -p
+  d = diff
+    ds  = diff --stat
     dc  = diff --cached
-	dcs = diff --cached --stat
-	dm  = diff master
-	dms = diff master --stat
-    d = diff
+    dcs = diff --cached --stat
+    dm  = diff master
+    dms = diff master --stat
 	f = fetch
 	fp = format-patch --stdout
-    g = grep --line-number -p -A2
+  g = grep --line-number -p -A2
+  l = --graph --decorate 
     lp = log -p --date=short
     lpj = log -p --date=short --author jlaster
     ls = log --stat
     lh = log --date=short HEAD~100..HEAD
     lhs = log --date=short HEAD~100..HEAD --stat
     lhj = log --date=short HEAD~1000..HEAD --author jlaster --pretty=oneline
-    rpull = pull --rebase
+  rpull = pull --rebase
 	r = rebase
     rc = rebase --continue
     rs = rebase --abort
     ra = rebase --abort
-	ri = rebase -i
+    ri = rebase -i
 	re = reset
-    rmc = rm --cached
-    sh = show --
-    shs = sho -- --stat
-	reh = reset HEAD
+    reh = reset HEAD
     rehh = reset HEAD~1 --hard
-    st = status
+  rmc = rm --cached
+  sh = show --
+    shs = sho -- --stat
+  st = status
     stm = status --untracked=no
     s = stash
     sa = stash apply
-
 
 [core]
 	pager = less -r

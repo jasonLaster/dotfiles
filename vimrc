@@ -13,7 +13,6 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-
 " ControlP
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_max_files=0
@@ -46,6 +45,10 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre *.php,*.mustache,*.tpl,*.rb,*.py,*.js :call <SID>StripTrailingWhitespaces()
+
+" vim window tabs
+imap ,t <Esc>:tabnew<CR>
+nmap <leader>t :tabnew<CR>
 
 
 " Alt escape

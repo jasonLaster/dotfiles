@@ -5,8 +5,10 @@ alias lss="ls -1"
 
 
 export WORK="~/work"
+export OS="~/src/_os"
+
 alias work="cd $WORK"
-alias workd="echo $WORK"
+alias os="cd $OS"
 
 alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"

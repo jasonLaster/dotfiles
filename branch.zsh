@@ -1,3 +1,7 @@
+function git-histogram() {
+  git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
+}
+
 function branch-push() {
   BC=$(git bc);
   if [ $BC != "master" ]; then

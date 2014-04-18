@@ -10,3 +10,7 @@ alias workd="echo $WORK"
 
 alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"
+
+alias rmswp="rm **/.*swp"
+
+alias gist-diff="gist --type diff"

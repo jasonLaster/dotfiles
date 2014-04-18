@@ -89,6 +89,14 @@ function branch-clone() {
   fi
 }
 
+function branch-rename() {
+  BC=$(git bc);
+  if [ $1 != "" ]; then
+    g cob jlaster-$1;
+    g bd $BC;
+  fi
+}
+
 function branch-awake() {
 }
 

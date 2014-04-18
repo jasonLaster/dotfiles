@@ -30,9 +30,8 @@
     lp = log -p --date=short
     lpj = log -p --date=short --author jlaster
     ls = log --stat
-    lh = log --date=short HEAD~100..HEAD
-    lhs = log --date=short HEAD~100..HEAD --stat
-    lhj = log --date=short HEAD~1000..HEAD --author jlaster --pretty=oneline
+    lh = log --date=short --pretty=oneline HEAD~100..HEAD
+    lhs = log --date=short --stat HEAD~100..HEAD
   rpull = pull --rebase
 	r = rebase
     rc = rebase --continue

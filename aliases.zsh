@@ -6,9 +6,11 @@ alias lss="ls -1"
 
 export WORK="~/work"
 export OS="~/src/_os"
+export MAR="$OS/marionette"
 
 alias work="cd $WORK"
 alias os="cd $OS"
+alias m="cd $MAR"
 
 alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"

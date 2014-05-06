@@ -3,7 +3,7 @@
 
 [alias]
 	a = add -p
-    ac = !git add -p && git commit -a
+    ac = !git add -p && git commit --amend
   b = branch
     ba = branch -a
     bc = rev-parse --abbrev-ref HEAD
@@ -16,6 +16,7 @@
   co = checkout
     cob = checkout -b
     cop = checkout -p
+  cp = cherry-pick
   d = diff
     ds  = diff --stat
     dc  = diff --cached
@@ -25,7 +26,7 @@
 	f = fetch
 	fp = format-patch --stdout
   g = grep --line-number -p -A2
-  l = --graph --decorate 
+  l = log --graph --decorate 
     lp = log -p --date=short
     lpj = log -p --date=short --author jlaster
     ls = log --stat
@@ -43,7 +44,7 @@
     rehh = reset HEAD~1 --hard
   rmc = rm --cached
   sh = show --
-    shs = sho -- --stat
+    shs = log -1 --stat 
   st = status
     stm = status --untracked=no
     s = stash
@@ -51,3 +52,6 @@
 
 [core]
 	pager = less -r
+
+[color]
+  ui = true

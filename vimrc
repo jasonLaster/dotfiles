@@ -1,9 +1,20 @@
-execute pathogen#infect()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+Bundle 'scrooloose/nerdtree'
+"Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdcommenter'
 
 " leader stuff
 let mapleader = ","
 nmap <leader>p <Esc>:set paste<CR>
 nmap <leader>' <Esc>:noh <CR>
+
+nmap <leader>s <Esc>:w <CR>
+imap <leader>s <Esc>:w <CR>
 
 ":colorscheme evening
 
@@ -20,10 +31,13 @@ let g:ctrlp_working_path_mode = 0
 set wildignore+=*/tmp/*,*tests/js-test-driver/*,*/dist/*
 nmap <leader>t :CtrlP<CR>
 nmap <leader>r :CtrlPMRU<CR>
+set autowriteall
+
 
 " NERDTree stuff
 let g:NERDTreeDirArrows=0
-nmap <leader>ne :NERDTree<cr>
+nmap ,n :NERDTreeFind<CR>
+nmap <leader>ne :NERDTreeToggle<cr>
 
 " add resolve paths
 " make gf over a path or class take you there
@@ -46,13 +60,24 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre *.php,*.mustache,*.tpl,*.rb,*.py,*.js :call <SID>StripTrailingWhitespaces()
 
-" vim window tabs
-imap ,t <Esc>:tabnew<CR>
-nmap <leader>t :tabnew<CR>
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
 
 " Alt escape
 inoremap jj <Esc>
+inoremap kj <Esc>
 
 " Add syntax highlighting
 syntax on
@@ -60,6 +85,9 @@ au BufRead,BufNewFile *.mustache set filetype=html  " add mustache to html filet
 filetype plugin on
 filetype plugin indent on
 
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
 
 " Use ack for grep
 set grepprg=ack
@@ -76,4 +104,6 @@ set showmatch              " Show matching brackets
 set ignorecase             " Do case insensitive matching
 set smartcase              " Do smart case matching
 set incsearch              " Incremental search
+
+nnoremap <CR> :nohlsearch<cr>
 

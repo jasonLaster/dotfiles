@@ -8,6 +8,7 @@
     ba = branch -a
     bc = rev-parse --abbrev-ref HEAD
     bd = branch -D
+    br = branch -r
   ci = commit
     cia = commit --amend
     cim	= commit -m
@@ -16,6 +17,7 @@
   co = checkout
     cob = checkout -b
     cop = checkout -p
+    cot = checkout --track
   cp = cherry-pick
   d = diff
     ds  = diff --stat

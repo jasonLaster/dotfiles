@@ -7,10 +7,12 @@ alias lss="ls -1"
 export WORK="~/work"
 export OS="~/src/_os"
 export MAR="$OS/marionette"
+export JS="$OS/_js"
 
 alias work="cd $WORK"
 alias os="cd $OS"
 alias m="cd $MAR"
+alias js="cd $JS"
 
 alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"
@@ -77,3 +79,7 @@ alias gs="git s"
 alias gsa="git sa"
 alias gsnp="git snp"
 alias gmv="git mv"
+#
+# chrome alias for when I'm working w/ blink
+alias chrome="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+alias chrome-debug="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --remote-debugging-port=9222 --no-first-run --user-data-dir=~/temp/chrome-dev-profile http://localhost:9222\#http://localhost:8001/front_end/inspector.html"

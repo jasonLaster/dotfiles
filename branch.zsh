@@ -107,3 +107,11 @@ function branch-awake() {
 function search() {
   g g -e "$1";
 }
+
+alias bpf="branch-push-force"
+alias bc="branch-clone"
+alias bn="branch-new"
+alias bu="branch-update"
+alias bm="branch-merge"
+alias bt="branch-track"
+alias bd="branch-destroy"

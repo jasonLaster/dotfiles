@@ -28,10 +28,12 @@
   g = grep --line-number -p -A2
   l = log --graph --decorate 
     lp = log -p --date=short
-    lpj = log -p --date=short --author jlaster
+    lpj = log -p --date=short --author jlaster HEAD~20..HEAD
+
     ls = log --stat
     lh = log --date=short --pretty=oneline HEAD~100..HEAD
     lhs = log --date=short --stat HEAD~100..HEAD
+    lhj = log --date=short --author jlaster --stat HEAD~20..HEAD
   rpull = pull --rebase
 	r = rebase
     rc = rebase --continue

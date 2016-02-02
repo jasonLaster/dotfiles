@@ -41,4 +41,8 @@ source $ZSH/oh-my-zsh.sh
 source ~/dotfiles/branch.zsh
 source ~/dotfiles/aliases.zsh
 
+# put something like this in your .bashrc:
+. ~/dotfiles/bin/z.sh
+   
+
 export PATH=$PATH:~/dotfiles/bin

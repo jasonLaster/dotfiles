@@ -35,14 +35,17 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+
 # Customize to your needs...
 #
+fpath=(/usr/local/share/zsh-completions $fpath)
 
-source ~/dotfiles/branch.zsh
-source ~/dotfiles/aliases.zsh
+# setup rvm
+# source /Users/jasonlaster/.rvm/scripts/rvm
 
-# put something like this in your .bashrc:
-. ~/dotfiles/bin/z.sh
-   
+source ~/src/dotfiles/branch.zsh
+source ~/src/dotfiles/aliases.zsh
+source ~/src/dotfiles/functions.zsh
 
-export PATH=$PATH:~/dotfiles/bin
+
+export PATH=$PATH:~/src/dotfiles/bin

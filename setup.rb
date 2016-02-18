@@ -16,5 +16,3 @@ end
 
 copyFile('zshrc.zsh', "#{home}/.zshrc")
 copyFile('gitconfig', "#{home}/.gitconfig")
-
-binding.pry

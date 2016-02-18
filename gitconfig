@@ -28,7 +28,7 @@
 	f = fetch
 	fp = format-patch --stdout
   g = grep --line-number -p -A2
-  l = log --graph --decorate 
+  l = log --graph --decorate
     lp = log -p --date=short
     lpj = log -p --date=short --author jlaster HEAD~20..HEAD
 
@@ -47,7 +47,7 @@
     rehh = reset HEAD~1 --hard
   rmc = rm --cached
   sh = show --
-    shs = log -1 --stat 
+    shs = log -1 --stat
   st = status
     stm = status --untracked=no
     s = stash

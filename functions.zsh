@@ -30,3 +30,14 @@ function r() {
 function mkcd() {
   mkdir -p "$@" && cd "$_";
 }
+
+
+function daily {
+  local current_date=`date +"%b-%d"`
+
+  if [[ ! -a ~/src/_daily/$current_date ]]; then
+    mkdir ~/src/_daily/$current_date;
+  fi
+
+  cd ~/src/_daily/$current_date
+}

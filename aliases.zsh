@@ -15,7 +15,8 @@ alias m="cd $MAR"
 alias js="cd $JS"
 
 alias rc="vim ~/.zshrc"
-alias src="source ~/.zshrc"
+alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
+
 
 alias rmswp="rm **/.*swp"
 

@@ -28,8 +28,9 @@ alias vl="git lhs | fpp -c vim"
 alias vsh="git show HEAD --numstat | fpp -c vim"
 
 # chrome alias for when I'm working w/ blink
-alias chrome="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
-alias chrome-debug="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --remote-debugging-port=9222 --no-first-run --user-data-dir=~/temp/chrome-dev-profile http://localhost:9222\#http://localhost:8001/front_end/inspector.html"
+alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+alias chrome-debug="canary --remote-debugging-port=9222 --no-first-run --user-data-dir=~/temp/chrome-dev-profile http://localhost:9222\#http://localhost:8001/front_end/inspector.html"
 alias python-server="python -m SimpleHTTPServer 8000"
 
 # Git aliases

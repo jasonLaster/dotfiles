@@ -10,8 +10,8 @@
     bc = rev-parse --abbrev-ref HEAD
     bd = branch -D
     br = branch -r
-  ci = commit
-    cia = commit --amend
+  ci = commit 
+    cia = commit --amend --verbose
     cim	= commit -m
   cl = clean
     clf = clean -f
@@ -56,6 +56,7 @@
 
 [core]
 	pager = less -r
+  whitespace = trailing-space,space-before-tab,indent-with-non-tab
 
 [color]
   ui = true

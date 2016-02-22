@@ -1,12 +1,22 @@
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" Let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+" set the runtime path to include Vundle and initialize
+set rtp+=/Users/jasonlaster/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-Bundle 'scrooloose/nerdtree'
-"Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdcommenter'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdcommenter'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 " leader stuff
 let mapleader = ","
@@ -106,4 +116,3 @@ set smartcase              " Do smart case matching
 set incsearch              " Incremental search
 
 nnoremap <CR> :nohlsearch<cr>
-

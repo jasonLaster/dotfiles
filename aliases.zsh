@@ -17,15 +17,23 @@ alias js="cd $JS"
 alias rc="vim ~/.zshrc"
 alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
 
-
+# useful way to clear vim temporary files
 alias rmswp="rm **/.*swp"
 
+# post a gist file to github if the gist tool is in the path
 alias gist-diff="gist --type diff"
 
 alias v="vim"
 alias vd="git dms | fpp -c vim"
 alias vl="git lhs | fpp -c vim"
 alias vsh="git show HEAD --numstat | fpp -c vim"
+
+# keep two directories uptodate $srcdir $destdir
+# a      - archive mode; same as
+# v      - verbose
+# delete - delete extraneous files from dest dirs
+alias rsync-backup="rsync -av --delete"
+alias rsync-backup-dryrun="rsync -avn --delete"
 
 # chrome alias for when I'm working w/ blink
 alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"

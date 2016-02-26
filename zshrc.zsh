@@ -49,3 +49,4 @@ source ~/src/dotfiles/functions.zsh
 
 
 export PATH=$PATH:~/src/dotfiles/bin
+export PATH=$PATH:~/src/_os/git-cinnabar # cinnibar is used to connect git to mercurial

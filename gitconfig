@@ -56,7 +56,6 @@
 
 [core]
 	pager = less -r
-  whitespace = trailing-space,space-before-tab,indent-with-non-tab
 
 [color]
   ui = true

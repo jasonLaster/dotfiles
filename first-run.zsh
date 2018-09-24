@@ -1,7 +1,7 @@
 
 
 # Setup HomeBrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install cask
 brew install wget
@@ -23,6 +23,8 @@ cd -
 # set the screenshots directory
 defaults write com.apple.screencapture location ~/Pictures/Screenshots; killall SystemUIServer
 
+# set git preferences
+git config --global core.editor $(which vim)
 
 # setup rvm (although, not sure if i want it)
 # \curl -sSL https://get.rvm.io | bash -s stable --ruby

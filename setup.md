@@ -108,3 +108,10 @@ ls -l ~/.atom/packages
 
 + Sublime-Style-Column-Selection
 + language-diff
+
+#### less
+syntax highlighting
+`brew install source-highlight`
+`less -N foo.rb`
+
+https://gist.github.com/textarcana/4611277

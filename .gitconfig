@@ -18,8 +18,7 @@
     br = branch -r
   ci = commit --verbose
     cia = commit --amend --verbose
-    acia = !git add . && commit --amend --no-verify
-    cim	= commit -m --no-verify
+    cim	= commit -m
   cl = clean
     clf = clean -f
   co = checkout

@@ -1,0 +1,5 @@
+# requires highlight `brew install highlight`
+
+function hlcopy() {
+  highlight -O rtf -S js -s molokai -j 3 -K 16 -n $1 | pbcopy
+}

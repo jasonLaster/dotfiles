@@ -1,3 +1,42 @@
+function log_test() {
+  COUNT=$((`ls ~/src/mozilla/logs | wc -l |  tr -s " " | sed 's/^[ ]//g'` + 1))
+  # COUNT="2"
+  FILE="/Users/jlaster/src/mozilla/logs/out-$COUNT.log"
+  touch $FILE
+  tee $FILE
+}
+
+
+function patch() {
+  FILE=~/src/mozilla/patches/$1.patch
+  git hgp > $FILE
+  less $FILE
+}
+
+alias bw="branch-work"
+function branch-work() {
+  DIR=~/src/mozilla/worktrees/$1
+
+  cd ~/src/mozilla/gecko-dev
+  # create worktree directory if it doesn't exist
+  if [ ! -d $DIR ]; then
+    git worktree add -b $1 $DIR origin/fx-team
+  fi
+
+  cd ~/src/mozilla/worktrees/$1
+}
+
+alias bwrm="branch-work-rm"
+function branch-work-rm() {
+  DIR=~/src/mozilla/worktrees/$1
+
+  # remove worktree directory if it exists
+  if [ -d $DIR ]; then
+    git bd $1;
+    rm $DIR;
+  fi
+}
+
 function git-histogram() {
   git ls-files | xargs -n1 git blame --line-porcelain | sed -n 's/^author //p' | sort -f | uniq -ic | sort -nr
 }
@@ -5,16 +44,15 @@ function git-histogram() {
 function branch-push() {
   BC=$(git bc);
   if [ $BC != "master" ]; then
-    git push origin $BC $1;
+    git push me $BC $1 --no-verify;
   fi
 }
 
 function branch-push-force() {
   BC=$(git bc);
   if [ $BC != "master" ]; then
-    git push origin $BC --force;
+    git push me $BC --force --no-verify;
   fi
-  echo "https://github.etsycorp.com/Engineering/Etsyweb/compare/$BC";
 }
 
 function branch-update() {
@@ -45,7 +83,7 @@ function branch-track() {
   if [ $BC != "master" ]; then
       git push -u origin $BC;
   fi
-  echo "https://github.etsycorp.com/Engineering/Etsyweb/compare/$BC";
+  #echo "https://github.etsycorp.com/Engineering/Etsyweb/compare/$BC";
 }
 
 function branch-deploy() {
@@ -81,9 +119,9 @@ function branch-sleep() {
 }
 
 function branch-new() {
-  g co "master"
+  git co "master"
   if [ $1 != "" ]; then
-    g cob jlaster-$1;
+    git cob $1;
   fi
 }
 
@@ -101,17 +139,36 @@ function branch-rename() {
   fi
 }
 
+function branch-reset() {
+  SHA=$(git rev-parse HEAD);
+  if [ $1 != "" ]; then
+    git reset --hard $1;
+    git cp $SHA;
+  fi
+}
+
 function branch-awake() {
+}
+
+function remote-add() {
+  git remote add $1 https://github.com/$1/debugger.html.git
 }
 
 function search() {
   g g -e "$1";
 }
 
+function clean-log() {
+  grep -v 'Unknown property' | grep -v 'Expected end of value' | grep -v 'parsing value for' | grep -v 'Expected declaration' | grep -v 'Unknown pseudo-class'
+}
+
+alias bp="branch-push"
 alias bpf="branch-push-force"
+
 alias bc="branch-clone"
 alias bn="branch-new"
 alias bu="branch-update"
 alias bm="branch-merge"
 alias bt="branch-track"
 alias bd="branch-destroy"
+alias br="branch-reset"

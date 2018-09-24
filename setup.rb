@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 require 'fileutils'
-require 'pry'
+# require 'pry'
 
 home = ENV["HOME"]
 dotfiles_dir = "#{home}/src/dotfiles"

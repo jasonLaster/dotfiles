@@ -60,7 +60,7 @@ source ~/src/dotfiles/functions.zsh
 
 
 export PATH=$PATH:~/src/dotfiles/bin
-export PATH=$PATH:/Users/jlaster/src/_os/git-cinnabar
+export PATH=$PATH:/Users/jlaster/src/mozilla/git-cinnabar
 export PATH=$PATH:~/bin:~/src/mozilla/moz-git-tools
 export PATH=$PATH:~/bin:~/src/mozilla/bin
 export PATH=~/.rbenv/bin:$PATH
@@ -72,9 +72,16 @@ eval "$(rbenv init -)"
 source ~/src/mozilla/shortcuts.zsh
 
 export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$PATH:/Users/jlaster/src/mozilla/arcanist/bin/"
 
 export NVM_DIR="/Users/jlaster/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 source /Users/jlaster/.cargo/env
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+. /usr/local/etc/profile.d/z.sh
+
+# added by travis gem
+[ -f /Users/jlaster/.travis/travis.sh ] && source /Users/jlaster/.travis/travis.sh

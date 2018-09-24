@@ -10,23 +10,25 @@
 
 [alias]
 	a = add -p
-    ac = !git add -p && git commit --amend
+    ac = !git add -p && git commit --amend -n --no-edit
   b = branch
     ba = branch -a
     bc = rev-parse --abbrev-ref HEAD
     bd = branch -D
     br = branch -r
   ci = commit --verbose
-    cia = commit --amend --verbose
-    acia = !git add . && commit --amend --no-verify
-    cim	= commit -m --no-verify
-  cl = clean
+    cia = commit --amend --verbose --no-edit -n
+    acia = !git add . && git commit --amend --no-edit -n
+    cim	= commit -n -m 
+    cl = clean
     clf = clean -f
   co = checkout
     cob = checkout -b
     cop = checkout -p
     cot = checkout --track
   cp = cherry-pick
+  cpa = cherry-pick --abort
+  cpc = cherry-pick --continue --no-verify
   d = diff
     ds  = diff --stat
     dc  = diff --cached
@@ -40,6 +42,7 @@
     lp = log -p --date=short
     lpj = log -p --date=short --author jlaster HEAD~20..HEAD
 
+    lo = log --oneline
     ls = log --stat
     lh = log --date=short --pretty=oneline HEAD~100..HEAD
     lhs = log --date=short --stat HEAD~100..HEAD
@@ -54,6 +57,7 @@
     rih3 = rebase -i HEAD~3
     rih4 = rebase -i HEAD~4
     rih5 = rebase -i HEAD~5
+    rih10 = rebase -i HEAD~10
     rih = rebase -i~HEAD~10
 	re = reset
     reh = reset HEAD
@@ -74,8 +78,11 @@
 
 [core]
 	pager = less -r
-  editor = /usr/bin/vim
+	editor = /usr/bin/vim
 
 
 [color]
   ui = true
+[cinnabar]
+	helper = /Users/jlaster/src/_os/git-cinnabar/git-cinnabar-helper
+    ;helper = /usr/local/Cellar/git-cinnabar/0.4.0_1/libexec/git-cinnabar-helper

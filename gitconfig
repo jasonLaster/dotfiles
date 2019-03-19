@@ -19,7 +19,7 @@
   ci = commit --verbose
     cia = commit --amend --verbose --no-edit -n
     acia = !git add . && git commit --amend --no-edit -n
-    cim	= commit -n -m 
+    cim	= commit -n -m
     cl = clean
     clf = clean -f
   co = checkout
@@ -80,9 +80,8 @@
 	pager = less -r
 	editor = /usr/bin/vim
 
-
 [color]
   ui = true
+
 [cinnabar]
-	helper = /Users/jlaster/src/_os/git-cinnabar/git-cinnabar-helper
-    ;helper = /usr/local/Cellar/git-cinnabar/0.4.0_1/libexec/git-cinnabar-helper
+    helper = /Users/jlaster/src/moz/git-cinnabar/git-cinnabar-helper

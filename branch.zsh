@@ -8,7 +8,7 @@ function log_test() {
 
 
 function patch() {
-  FILE=~/src/mozilla/patches/$1.patch
+  FILE=~/src/moz/patches/$1.patch
   git hgp > $FILE
   less $FILE
 }

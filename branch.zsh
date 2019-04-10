@@ -162,6 +162,30 @@ function clean-log() {
   grep -v 'Unknown property' | grep -v 'Expected end of value' | grep -v 'parsing value for' | grep -v 'Expected declaration' | grep -v 'Unknown pseudo-class'
 }
 
+
+function mochi() {
+  cd ~/src/moz/gecko-dev;
+  ../mochii/bin/mochii.js "$1";
+  cd -;
+}
+
+function mochi-headless() {
+  cd ~/src/moz/gecko-dev;
+  ../mochii/bin/mochii.js  --headless "$1";
+  cd -;
+}
+
+function mochi-debugger() {
+  cd ~/src/moz/gecko-dev;
+  ../mochii/bin/mochii.js  --jsdebugger "$1";
+  cd -;
+}
+
+alias mm="mochi"
+alias mmh="mochi-headless"
+alias mmd="mochi-debugger"
+
+
 alias bp="branch-push"
 alias bpf="branch-push-force"
 

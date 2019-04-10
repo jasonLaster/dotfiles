@@ -1,63 +1,32 @@
 
 alias g="git"
 alias s="git grep -e \"$1\""
-alias be="bundle exec"
-alias lss="ls -1"
 
-
-export WORK="~/work"
 export OS="~/src/_os"
-export MAR="$OS/marionette"
 export JS="$OS/_js"
 export MOZ="~/src/moz"
 export GECKO="~/src/moz/gecko-dev"
 
-alias work="cd $WORK"
 alias os="cd $OS"
-alias m="cd $MAR"
 alias moz="cd $MOZ"
 alias gecko="cd $GECKO"
-alias html="cd ~/src/moz/debugger.html"
-alias core="cd ~/src/moz/devtools-core"
-alias reps="cd ~/src/mozilla/devtools-reps"
+alias dbg="cd $GECKO/devtools/client/debugger"
 alias m="$GECKO/mach"
-alias mm="$GECKO/mach mochitest"
-alias mmh="$GECKO/mach mochitest --headless"
-alias mb="$GECKO/mach build"
-alias mbf="$GECKO/mach build faster"
+alias mb="cd $GECKO; $GECKO/mach build; cd -"
+alias mbf="cd $GECKO; $GECKO/mach build faster; cd -"
+alias mcb="cd $GECKO; ./mach clobber; ./mach build; cd -"
 
 alias launch="cd ~/src/moz/devtools-core/packages/devtools-launchpad"
 
 alias rc="vim ~/.zshrc"
 alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
 
-# useful way to clear vim temporary files
-alias rmswp="rm **/.*swp"
-
 # post a gist file to github if the gist tool is in the path
 alias gist-diff="gist --type diff"
 
 alias v="vim"
-alias vd="git dms | fpp -c vim"
-alias vl="git lhs | fpp -c vim"
-alias vsh="git show HEAD --numstat | fpp -c vim"
 
-# fix display camera hangup
 alias fix-camera="sudo killall VDCAssistant"
-
-# keep two directories uptodate $srcdir $destdir
-# a      - archive mode; same as
-# v      - verbose
-# delete - delete extraneous files from dest dirs
-alias rsync-backup="rsync -av --delete"
-alias rsync-backup-dryrun="rsync -avn --delete"
-
-alias unfuck-camera="sudo killall VDCAssistant"
-
-# chrome alias for when I'm working w/ blink
-alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-alias chrome-debug="chrome --remote-debugging-port=9222 --no-first-run --user-data-dir=~/temp/chrome-dev-profile http://localhost:9222\#http://localhost:8001/front_end/inspector.html"
 alias python-server="python -m SimpleHTTPServer 8000"
 
 # Git aliases
@@ -90,7 +59,6 @@ alias gg="git g"
 alias gl="git l"
 alias glo="git lo"
 alias glh="git lh"
-alias glhj="git lhj"
 alias glhs="git lhs"
 alias glp="git lp"
 alias glpj="git lpj"

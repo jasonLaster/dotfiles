@@ -61,7 +61,7 @@ function branch-update() {
       git co master;
       git rpull;
       git co $BC;
-      git rebase master;
+      branch-reset master;
   fi
 }
 
@@ -175,15 +175,52 @@ function mochi-headless() {
   cd -;
 }
 
+function mochi-ci() {
+  cd ~/src/moz/gecko-dev;
+  ../mochii/bin/mochii.js --ci --headless "$1";
+  cd -;
+}
+
 function mochi-debugger() {
   cd ~/src/moz/gecko-dev;
   ../mochii/bin/mochii.js  --jsdebugger "$1";
   cd -;
 }
 
+function moz-patch() {
+  cd ~/src/moz/gecko-dev;
+  moz-phab patch "$1";
+  cd -;
+}
+
+function mach-try() {
+  cd ~/src/moz/gecko-dev;
+  ./mach try --preset debugger-tests
+  cd -;
+}
+
+function mach-lint() {
+  cd ~/src/moz/gecko-dev;
+  ./mach lint --fix "$1";
+  cd -;
+}
+
+function mach-lint-head() {
+  cd ~/src/moz/gecko-dev;
+  FILES=$(git diff-tree --no-commit-id --name-only -r HEAD | tr '\n' '\ ');
+  echo $FILES:
+  ./mach lint --fix $FILES;
+  cd -;
+}
+
 alias mm="mochi"
 alias mmh="mochi-headless"
 alias mmd="mochi-debugger"
+alias mmc="mochi-ci"
+alias mt="mach-try"
+alias mp="moz-patch"
+alias ml="mach-lint"
+alias mlh="mach-lint-head"
 
 
 alias bp="branch-push"

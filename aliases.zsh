@@ -6,6 +6,7 @@ export OS="~/src/_os"
 export JS="$OS/_js"
 export MOZ="~/src/moz"
 export GECKO="~/src/moz/gecko-dev"
+export NIGHTLY="/Applications/Firefox Nightly.app/Contents/MacOS/firefox"
 
 alias os="cd $OS"
 alias moz="cd $MOZ"
@@ -15,6 +16,10 @@ alias m="$GECKO/mach"
 alias mb="cd $GECKO; $GECKO/mach build; cd -"
 alias mbf="cd $GECKO; $GECKO/mach build faster; cd -"
 alias mcb="cd $GECKO; ./mach clobber; ./mach build; cd -"
+alias mbr="cd $GECKO; ./mach build faster; ./mach run -P dev1 --jsdebugger; cd -"
+alias mr="cd $GECKO; ./mach run -P dev5; cd -"
+alias mrd="cd $GECKO; ./mach run -P dev5 --jsdebugger; cd -"
+
 
 alias launch="cd ~/src/moz/devtools-core/packages/devtools-launchpad"
 

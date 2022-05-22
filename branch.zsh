@@ -43,44 +43,44 @@ function git-histogram() {
 
 function branch-push() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
+  if [ $BC != "main" ]; then
     git push me $BC $1 --no-verify;
   fi
 }
 
 function branch-push-force() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
+  if [ $BC != "main" ]; then
     git push me $BC --force --no-verify;
   fi
 }
 
 function branch-update() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
-      git co master;
+  if [ $BC != "main" ]; then
+      git co main;
       git rpull;
       git co $BC;
-      branch-reset master;
+      branch-reset main;
   fi
 }
 
 function branch-merge() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
-      git co master;
+  if [ $BC != "main" ]; then
+      git co main;
       git rpull;
       git co $BC;
-      git r master;
-      git co master;
+      git r main;
+      git co main;
       git r $BC;
-      git r origin/master --ignore-date;
+      git r origin/main --ignore-date;
   fi
 }
 
 function branch-track() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
+  if [ $BC != "main" ]; then
       git push -u origin $BC;
   fi
   #echo "https://github.etsycorp.com/Engineering/Etsyweb/compare/$BC";
@@ -88,20 +88,20 @@ function branch-track() {
 
 function branch-deploy() {
   BC=$(git bc);
-  if [ $BC == "master" ]; then
+  if [ $BC == "main" ]; then
     git rpull;
-    git push origin master;
+    git push origin main;
   fi
 }
 
 function m() {
-  git checkout master;
+  git checkout main;
 }
 
 function branch-destroy() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
-      git checkout "master";
+  if [ $BC != "main" ]; then
+      git checkout "main";
       git branch -D $BC;
   fi
 }
@@ -112,14 +112,14 @@ function branch-destroy-remote() {
 
 function branch-sleep() {
   BC=$(git bc);
-  if [ $BC != "master" ]; then
+  if [ $BC != "main" ]; then
     git checkout -b "zz-$BC";
     git branch -d $BC;
   fi
 }
 
 function branch-new() {
-  git co "master"
+  git co "main"
   if [ $1 != "" ]; then
     git cob $1;
   fi

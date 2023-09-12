@@ -4,35 +4,14 @@ alias s="git grep -e \"$1\""
 
 export OS="~/src/_os"
 export JS="$OS/_js"
-export MOZ="~/src/moz"
-export GECKO="~/src/moz/gecko-dev"
-export NIGHTLY="/Applications/Firefox Nightly.app/Contents/MacOS/firefox"
 
 alias os="cd $OS"
-alias moz="cd $MOZ"
-alias gecko="cd $GECKO"
-alias dbg="cd $GECKO/devtools/client/debugger"
-alias m="$GECKO/mach"
-alias mb="cd $GECKO; $GECKO/mach build; cd -"
-alias mbf="cd $GECKO; $GECKO/mach build faster; cd -"
-alias mcb="cd $GECKO; ./mach clobber; ./mach build; cd -"
-alias mbr="cd $GECKO; ./mach build faster; ./mach run -P dev1 --jsdebugger; cd -"
-alias mr="cd $GECKO; ./mach run -P dev5; cd -"
-alias mrd="cd $GECKO; ./mach run -P dev5 --jsdebugger; cd -"
-
-
-alias launch="cd ~/src/moz/devtools-core/packages/devtools-launchpad"
 
 alias rc="vim ~/.zshrc"
-alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
+# alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
 
 # post a gist file to github if the gist tool is in the path
 alias gist-diff="gist --type diff"
-
-alias v="vim"
-
-alias fix-camera="sudo killall VDCAssistant"
-alias python-server="python -m SimpleHTTPServer 8000"
 
 # Git aliases
 alias ga="git a"

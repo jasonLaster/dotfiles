@@ -1,15 +1,5 @@
 
 alias g="git"
-alias s="git grep -e \"$1\""
-
-export OS="~/src/_os"
-export JS="$OS/_js"
-
-alias os="cd $OS"
-
-alias rc="vim ~/.zshrc"
-# alias src="ruby ~/src/dotfiles/setup.rb; source ~/.zshrc"
-
 # post a gist file to github if the gist tool is in the path
 alias gist-diff="gist --type diff"
 

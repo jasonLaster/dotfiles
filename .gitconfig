@@ -5,9 +5,6 @@
 [credential]
   helper = osxkeychain
 
-[mozreview]
-  nickname = jlast
-
 [alias]
 	a = add -p
     ac = !git add -p && git commit --amend -n --no-edit

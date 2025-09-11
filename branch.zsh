@@ -22,6 +22,16 @@ function branch-update() {
   fi
 }
 
+function branch-rebase() {
+  BC=$(git bc);
+  if [ $BC != "main" ]; then
+      git co main;
+      git rpull;
+      git co $BC;
+      git rebase main;
+  fi
+}
+
 function branch-merge() {
   BC=$(git bc);
   if [ $BC != "main" ]; then
@@ -123,7 +133,7 @@ alias bpf="branch-push-force"
 alias bc="branch-clone"
 alias bn="branch-new"
 alias bu="branch-update"
+alias br="branch-rebase"
 alias bm="branch-merge"
 alias bt="branch-track"
 alias bd="branch-destroy"
-alias br="branch-reset"

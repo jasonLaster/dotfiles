@@ -1,4 +1,5 @@
 source ~/src/dotfiles/branch.zsh
+source ~/src/dotfiles/worktree.zsh
 source ~/src/dotfiles/aliases.zsh
 source ~/src/dotfiles/functions.zsh
 

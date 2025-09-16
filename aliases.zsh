@@ -60,3 +60,6 @@ alias gshs="git shs"
 alias gsnp="git snp"
 alias gst="git st"
 alias gstm="git stm"
+
+# GitHub CLI aliases
+alias ghc="gh pr checkout"

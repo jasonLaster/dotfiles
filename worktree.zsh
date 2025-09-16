@@ -53,13 +53,13 @@ function make-worktree() {
     echo "⚠️  Branch '$branch_name' is currently checked out in the main repository"
     echo "🔄 Switching to main branch to free up '$branch_name' for worktree..."
     
-    # Switch to main branch (or master if main doesn't exist)
+    # Switch to main branch (fallback to main for older repos)
     if git show-ref --verify --quiet refs/heads/main; then
       git checkout main
-    elif git show-ref --verify --quiet refs/heads/master; then
-      git checkout master
+    elif git show-ref --verify --quiet refs/heads/main; then
+      git checkout main
     else
-      echo "❌ Could not find main or master branch to switch to"
+      echo "❌ Could not find main branch (or main fallback) to switch to"
       return 1
     fi
     

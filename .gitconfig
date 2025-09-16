@@ -30,8 +30,8 @@
     ds  = diff --stat
     dc  = diff --cached
     dcs = diff --cached --stat
-    dm  = diff master
-    dms = diff master --stat
+    dm  = diff main
+    dms = diff main --stat
 	f = fetch
 	fp = format-patch --stdout
   g = grep --line-number -p -A2

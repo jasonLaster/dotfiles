@@ -1,0 +1,2 @@
+#!/bin/bash
+exec bun ~/src/dotfiles/bin/rm-branches.ts "$@"

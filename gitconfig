@@ -82,6 +82,3 @@
 
 [color]
   ui = true
-
-[cinnabar]
-    helper = /Users/jlaster/src/moz/git-cinnabar/git-cinnabar-helper

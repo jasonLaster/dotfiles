@@ -63,3 +63,5 @@ alias gstm="git stm"
 
 # GitHub CLI aliases
 alias ghc="gh pr checkout"
+
+alias co="codex -m gpt-5-codex --search"

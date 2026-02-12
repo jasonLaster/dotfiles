@@ -15,20 +15,16 @@ function branch-push-force() {
 function branch-update() {
   BC=$(git bc);
   if [ $BC != "main" ]; then
-      git co main;
-      git rpull;
-      git co $BC;
-      branch-reset main;
+      git fetch origin main;
+      branch-reset origin/main;
   fi
 }
 
 function branch-rebase() {
   BC=$(git bc);
   if [ $BC != "main" ]; then
-      git co main;
-      git rpull;
-      git co $BC;
-      git rebase main;
+      git fetch origin main;
+      git rebase origin/main;
   fi
 }
 

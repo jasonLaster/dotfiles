@@ -33,3 +33,15 @@ function daily {
 
   cd ~/src/_daily/$current_date
 }
+
+function sleep-1hr {
+  caffeinate -d -t 3600 &
+}
+
+function sleep-2hrs {
+  caffeinate -d -t 7200 &
+}
+
+function sleep-4hrs {
+  caffeinate -d -t 14400 &
+}

@@ -65,3 +65,9 @@ alias gstm="git stm"
 alias ghc="gh pr checkout"
 
 alias co="codex -m gpt-5-codex --search"
+
+# Project directories
+alias circuit="cd ~/src/autonomy/circuit"
+
+# Claude
+alias claude-dangerous="claude --dangerously-skip-permissions"

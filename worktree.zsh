@@ -1,6 +1,5 @@
-# Worktree management functions
+# Worktree management: wt create|list|rm|cd
 
-# Array of color schemes for VS Code title bar
 declare -a WORKTREE_COLORS=(
   "#6d28d9"  # Purple
   "#dc2626"  # Red
@@ -9,166 +8,207 @@ declare -a WORKTREE_COLORS=(
   "#ea580c"  # Orange
 )
 
-# Get current branch name
-function git-branch-name() {
-  git rev-parse --abbrev-ref HEAD
-}
-
-# Generate a color index based on branch name hash
-function get-color-index() {
-  local branch_name="$1"
-  local hash=$(echo "$branch_name" | md5sum | cut -c1-8)
-  local index=$((0x$hash % 5))
-  echo $index
-}
-
-# Create a worktree for the current branch
-function make-worktree() {
-  # Check if we're in a git repository
+function _wt_ensure_repo() {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "❌ Error: This command must be run in a git repository"
+    echo "Error: not a git repository"
     return 1
   fi
+}
 
-  # Get repository name from the current directory
-  local repo_name=$(basename "$(git rev-parse --show-toplevel)")
-  local repo_parent=$(dirname "$(git rev-parse --show-toplevel)")
-  local branch_name=$(git-branch-name)
-  local worktree_dir="$repo_parent/${repo_name}-branches/$branch_name"
-  
-  # Check if worktree already exists
+function _wt_main_root() {
+  dirname "$(git rev-parse --path-format=absolute --git-common-dir)"
+}
+
+function _wt_branches_dir() {
+  local main_root=$(_wt_main_root)
+  echo "$(dirname "$main_root")/$(basename "$main_root")-branches"
+}
+
+function _wt_color() {
+  local hash=$(echo "$1" | md5 -q | cut -c1-8)
+  local index=$(( (0x$hash % ${#WORKTREE_COLORS[@]}) + 1 ))
+  echo "${WORKTREE_COLORS[$index]}"
+}
+
+function wt() {
+  case "$1" in
+    create) shift; _wt_create "$@" ;;
+    list|ls) shift; _wt_list "$@" ;;
+    rm)     shift; _wt_rm "$@" ;;
+    cd)     shift; _wt_cd "$@" ;;
+    prune)  shift; rm-branches "$@" ;;
+    *)
+      echo "Usage: wt <command>"
+      echo ""
+      echo "Commands:"
+      echo "  create <branch>  Create a worktree (creates branch if needed)"
+      echo "  list             List all worktrees"
+      echo "  rm [branch]      Remove a worktree (default: current)"
+      echo "  cd [branch]      Navigate to a worktree (default: main root)"
+      echo "  prune [days]     Remove old branches/worktrees (default: 7 days)"
+      ;;
+  esac
+}
+
+function _wt_create() {
+  _wt_ensure_repo || return 1
+
+  local branch="$1"
+  if [[ -z "$branch" ]]; then
+    branch=$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u | fzf --height=~40% --prompt="branch> ") || return 0
+  fi
+
+  local main_root=$(_wt_main_root)
+  local worktree_dir="$(_wt_branches_dir)/$branch"
+
   if [[ -d "$worktree_dir" ]]; then
-    echo "⚠️  Worktree for branch '$branch_name' already exists at: $worktree_dir"
-    echo "Opening existing worktree..."
+    echo "Worktree already exists, navigating to: $worktree_dir"
     cd "$worktree_dir"
-    cursor .
     return 0
   fi
 
-  # Create the worktree
-  echo "🌿 Creating worktree for branch: $branch_name"
-  
-  # Try to create the worktree
-  if ! git worktree add "$worktree_dir" "$branch_name" 2>/dev/null; then
-    echo "⚠️  Branch '$branch_name' is currently checked out in the main repository"
-    echo "🔄 Switching to main branch to free up '$branch_name' for worktree..."
-    
-    # Switch to main branch (fallback to main for older repos)
-    if git show-ref --verify --quiet refs/heads/main; then
-      git checkout main
-    elif git show-ref --verify --quiet refs/heads/main; then
-      git checkout main
-    else
-      echo "❌ Could not find main branch (or main fallback) to switch to"
-      return 1
-    fi
-    
-    # Now try creating the worktree again
-    echo "🌿 Creating worktree for branch: $branch_name"
-    if ! git worktree add "$worktree_dir" "$branch_name"; then
-      echo "❌ Failed to create worktree"
-      return 1
-    fi
-  fi
-
-  # Call project-specific worktree setup script if it exists
-  if [[ -f "./scripts/worktree-add.sh" ]]; then
-    echo "🔧 Running project-specific worktree setup..."
-    ./scripts/worktree-add.sh "$worktree_dir"
+  # Existing branch → check out; otherwise create new branch
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$worktree_dir" "$branch" || return 1
   else
-    echo "ℹ️  No project-specific setup script found (./scripts/worktree-add.sh)"
+    git worktree add -b "$branch" "$worktree_dir" || return 1
   fi
 
-  # Create .vscode directory and settings.json
-  echo "🎨 Setting up VS Code settings..."
+  # Project-specific setup hook
+  if [[ -f "$main_root/scripts/worktree-add.sh" ]]; then
+    "$main_root/scripts/worktree-add.sh" "$worktree_dir"
+  fi
+
+  # VS Code title bar color
+  local color=$(_wt_color "$branch")
   mkdir -p "$worktree_dir/.vscode"
-  
-  # Get color index based on branch name
-  local color_index=$(get-color-index "$branch_name")
-  local selected_color="${WORKTREE_COLORS[$color_index]}"
-  
-  # Create settings.json with the selected color
   cat > "$worktree_dir/.vscode/settings.json" << EOF
 {
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "$selected_color",
+    "titleBar.activeBackground": "$color",
     "titleBar.activeForeground": "#ffffff"
   }
 }
 EOF
 
-  echo "✅ Worktree created successfully!"
-  echo "📍 Location: $worktree_dir"
-  echo "🎨 Color: $selected_color"
-  
-  # Navigate to the worktree
   cd "$worktree_dir"
-  
-  # Install dependencies if package.json exists
+
   if [[ -f "package.json" ]]; then
-    echo "📦 Installing dependencies with pnpm..."
+    echo "Installing dependencies..."
     pnpm i
-    if [[ $? -eq 0 ]]; then
-      echo "✅ Dependencies installed successfully!"
-    else
-      echo "⚠️  Dependency installation failed, but worktree is ready"
-    fi
-  else
-    echo "ℹ️  No package.json found, skipping dependency installation"
   fi
-  
-  # Launch Cursor
-  cursor .
+
+  echo "Created worktree: $worktree_dir"
 }
 
-# Delete a worktree for the current branch
-function delete-worktree() {
-  # Check if we're in a git repository
-  if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "❌ Error: This command must be run in a git repository"
-    return 1
-  fi
-
-  # Get repository name from the current directory
-  local repo_name=$(basename "$(git rev-parse --show-toplevel)")
-  local repo_parent=$(dirname "$(git rev-parse --show-toplevel)")
-  local branch_name=$(git-branch-name)
-  local worktree_dir="$repo_parent/${repo_name}-branches/$branch_name"
-  
-  # Check if worktree exists
-  if [[ ! -d "$worktree_dir" ]]; then
-    echo "⚠️  No worktree found for branch: $branch_name"
-    return 1
-  fi
-
-  # Confirm deletion
-  echo "🗑️  Are you sure you want to delete the worktree for branch '$branch_name'?"
-  echo "📍 Location: $worktree_dir"
-  read -q "REPLY?Press Y to confirm, any other key to cancel: "
-  echo
-
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Remove the worktree
-    git worktree remove "$worktree_dir" --force
-    
-    if [[ $? -eq 0 ]]; then
-      echo "✅ Worktree deleted successfully!"
-    else
-      echo "❌ Failed to delete worktree"
-      return 1
-    fi
-  else
-    echo "❌ Deletion cancelled"
-  fi
-}
-
-# List all worktrees
-function list-worktrees() {
-  echo "🌿 Available worktrees:"
+function _wt_list() {
+  _wt_ensure_repo || return 1
   git worktree list
 }
 
-# Aliases
-alias mw="make-worktree"
-alias dw="delete-worktree"
-alias lw="list-worktrees"
+function _wt_rm() {
+  _wt_ensure_repo || return 1
+
+  local branch="$1"
+
+  # Default to current worktree's branch, or fzf picker
+  if [[ -z "$branch" ]]; then
+    local branches_dir=$(_wt_branches_dir)
+    local current=$(pwd)
+    if [[ "$current" == "$branches_dir"/* ]]; then
+      branch="${current#$branches_dir/}"
+    else
+      branch=$(_wt_list_branches | fzf --height=~40% --prompt="remove worktree> ") || return 0
+    fi
+  fi
+
+  local worktree_dir="$(_wt_branches_dir)/$branch"
+
+  if [[ ! -d "$worktree_dir" ]]; then
+    echo "No worktree found for branch: $branch"
+    return 1
+  fi
+
+  # Move out if we're inside the worktree being removed
+  if [[ "$(pwd)" == "$worktree_dir"* ]]; then
+    cd "$(_wt_main_root)"
+  fi
+
+  git worktree remove "$worktree_dir" --force
+  echo "Removed worktree: $worktree_dir"
+}
+
+function _wt_cd() {
+  _wt_ensure_repo || return 1
+
+  local branch="$1"
+
+  # No arg → fzf picker of open PRs
+  if [[ -z "$branch" ]]; then
+    local selection
+    selection=$(gh pr list --limit 30 --json headRefName,title,number --jq '.[] | "\(.headRefName)\t#\(.number) \(.title)"' 2>/dev/null \
+      | fzf --height=~40% --prompt="pr> " --delimiter='\t' --with-nth=1.. --tabstop=30) || return 0
+    branch="${selection%%	*}"
+  fi
+
+  local worktree_dir="$(_wt_branches_dir)/$branch"
+
+  if [[ -d "$worktree_dir" ]]; then
+    cd "$worktree_dir"
+    return 0
+  fi
+
+  # Fall back to searching all worktrees (handles main, etc.)
+  local match=$(git worktree list | grep "\[$branch\]" | awk '{print $1}')
+  if [[ -n "$match" ]]; then
+    cd "$match"
+    return 0
+  fi
+
+  # Branch not checked out locally — create worktree
+  _wt_create "$branch"
+}
+
+# --- Tab completion ---
+
+function _wt_list_branches() {
+  local branches=()
+
+  # Fast: list subdirectories from branches dir
+  local bdir=$(_wt_branches_dir 2>/dev/null)
+  if [[ -n "$bdir" && -d "$bdir" ]]; then
+    for d in "$bdir"/*(N/); do
+      branches+=("${d:t}")
+    done
+  fi
+
+  # Supplement: parse main worktree branch from git
+  local line branch
+  git worktree list --porcelain 2>/dev/null | while IFS= read -r line; do
+    if [[ "$line" == branch\ * ]]; then
+      branch="${line#branch refs/heads/}"
+      branches+=("$branch")
+    fi
+  done
+
+  # Deduplicate
+  printf '%s\n' "${branches[@]}" | sort -u
+}
+
+function _wt_completion() {
+  if (( CURRENT == 2 )); then
+    compadd create list ls rm cd
+    return
+  fi
+
+  case "${words[2]}" in
+    cd|rm)
+      compadd ${(f)"$(_wt_list_branches)"}
+      ;;
+    create)
+      compadd ${(f)"$(git branch -a --format='%(refname:short)' 2>/dev/null | sed 's|^origin/||' | sort -u)"}
+      ;;
+  esac
+}
+
+compdef _wt_completion wt

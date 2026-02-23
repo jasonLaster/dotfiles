@@ -67,11 +67,14 @@ function _wt_create() {
     return 0
   fi
 
-  # Existing branch → check out; otherwise create new branch
+  # Start from latest origin/main
+  git fetch origin main --quiet 2>/dev/null
+
+  # Existing branch → check out; otherwise create new branch from origin/main
   if git show-ref --verify --quiet "refs/heads/$branch"; then
     git worktree add "$worktree_dir" "$branch" || return 1
   else
-    git worktree add -b "$branch" "$worktree_dir" || return 1
+    git worktree add -b "$branch" "$worktree_dir" origin/main || return 1
   fi
 
   # Project-specific setup hook
@@ -143,11 +146,34 @@ function _wt_cd() {
 
   local branch="$1"
 
-  # No arg → fzf picker of open PRs
+  # "main" → go to root and check out main
+  if [[ "$branch" == "main" ]]; then
+    cd "$(_wt_main_root)"
+    git checkout main
+    return $?
+  fi
+
+  # No arg → fzf picker: existing worktrees + open PRs
   if [[ -z "$branch" ]]; then
+    local -a seen=()
     local selection
-    selection=$(gh pr list --limit 30 --json headRefName,title,number --jq '.[] | "\(.headRefName)\t#\(.number) \(.title)"' 2>/dev/null \
-      | fzf --height=~40% --prompt="pr> " --delimiter='\t' --with-nth=1.. --tabstop=30) || return 0
+
+    selection=$({
+      # Existing worktrees (including main)
+      local b
+      for b in ${(f)"$(_wt_list_branches)"}; do
+        seen+=("$b")
+        echo "$b"
+      done
+
+      # Open PRs not already in worktrees
+      local pr_branch pr_line
+      while IFS=$'\t' read -r pr_branch pr_line; do
+        if (( ${seen[(Ie)$pr_branch]} == 0 )); then
+          echo "$pr_branch	$pr_line"
+        fi
+      done < <(gh pr list --limit 30 --json headRefName,title,number --jq '.[] | "\(.headRefName)\t#\(.number) \(.title)"' 2>/dev/null)
+    } | fzf --height=~40% --prompt="worktree> " --delimiter='\t' --with-nth=1.. --tabstop=30) || return 0
     branch="${selection%%	*}"
   fi
 

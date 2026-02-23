@@ -33,9 +33,9 @@ Worktrees live in a sibling directory named `<repo>-branches/`:
 
 ### `wt cd`
 
-With no argument, shows a fuzzy picker of open PRs (via `gh pr list`). Select one and it either navigates to the existing worktree or creates it.
+With no argument, shows a fuzzy picker with existing worktrees followed by open PRs (via `gh pr list`). Select an existing worktree to navigate to it, or select a PR branch to create a worktree and cd into it.
 
-With a branch name, navigates directly. Works for any branch — not just open PRs.
+With a branch name, navigates directly. Works for any branch — not just open PRs. `wt cd main` is special-cased to cd to the repo root and check out main.
 
 ### `wt create`
 

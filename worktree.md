@@ -42,7 +42,7 @@ With a branch name, navigates directly. Works for any branch — not just open P
 Creates a worktree and cd's into it. If the branch exists, checks it out; otherwise creates a new branch. On creation:
 
 - Runs `scripts/worktree-add.sh` if present in the repo root
-- Sets a deterministic VS Code title bar color based on branch name
+- Sets a deterministic VS Code / Cursor title bar color based on branch name
 - Runs `pnpm i` if `package.json` exists
 
 ### `wt rm`
